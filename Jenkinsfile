@@ -4,8 +4,8 @@ pipeline {
     environment {
         PROJECT_NAME = "pipeline-sec"
         SONARQUBE_URL = "http://sonarqube:9000"
-        SONARQUBE_TOKEN = "sqa_97337b08dea6ef68cfc05a11c8f7da338a793afc"
-        TARGET_URL = "http://172.26.16.1:5000"
+        SONARQUBE_TOKEN = "sqa_8fcc68789aa69ec6176ac80bd11b81d2f43d169e"
+        TARGET_URL = "http://172.23.32.1:5000"
     }
 
     stages {
@@ -72,7 +72,7 @@ pipeline {
                         -v $(pwd):/zap/wrk/:rw \
                         ghcr.io/zaproxy/zaproxy:stable \
                         zap-baseline.py \
-                        -t http://172.26.16.1:5000 \
+                        -t http://172.23.32.1:5000 \
                         -r zap-report.html
                 '''
             }
