@@ -39,7 +39,7 @@ pipeline {
                     owasp/dependency-check:10.0.2 \
                     --project pipeline-sec \
                     --scan /src \
-                    --format XML \
+                    --format JSON \
                     --out /src/reports \
                     --noupdate \
                     --enableExperimental
