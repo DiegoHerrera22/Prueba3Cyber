@@ -25,7 +25,7 @@ pipeline {
                         docker volume create dependency-check-data || true
                         echo "🔍 Ejecutando OWASP Dependency-Check..."
                         docker run --rm --user root \
-                            -v "$PWD":/src \
+                            -v $(pwd):/src \
                             -v dependency-check-data:/usr/share/dependency-check/data \
                             owasp/dependency-check:10.0.2 \
                             --project pipeline-sec \
