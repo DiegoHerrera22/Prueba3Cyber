@@ -67,7 +67,7 @@ pipeline {
                 echo "🕵️ Ejecutando escaneo dinámico con OWASP ZAP..."
                 sh '''
                     chmod -R 777 $(pwd)
-                    docker run --rm \
+                    docker run --rm --user root \
                         --add-host=host.docker.internal:host-gateway \
                         -v $(pwd):/zap/wrk/:rw \
                         ghcr.io/zaproxy/zaproxy:stable \
