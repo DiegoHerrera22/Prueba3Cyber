@@ -48,13 +48,14 @@ pipeline {
             steps {
                 echo "🧠 Analizando código con SonarQube..."
                 withSonarQubeEnv('sonarqube') {
-                    sh '''
+                    sh """
                     sonar-scanner \
                         -Dsonar.projectKey=$PROJECT_NAME \
-                        -Dsonar.sources=\\. \
+                        -Dsonar.sources=. \
                         -Dsonar.host.url=$SONARQUBE_URL \
                         -Dsonar.login=$SONARQUBE_TOKEN
-                    '''
+                    """
+
                 }
             }
         }
