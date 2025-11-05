@@ -26,6 +26,7 @@ pipeline {
             withCredentials([string(credentialsId: 'nvd-api-key', variable: 'NVD_API_KEY')]) {
               sh '''
               mkdir -p reports
+              chmod -R 777 reports
         
               # Crear volumen persistente para cachear la base de datos NVD
               docker volume create dependency-check-data || true
