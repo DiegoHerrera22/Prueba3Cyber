@@ -68,11 +68,11 @@ pipeline {
                 sh '''
                     chmod -R 777 $(pwd)
                     docker run --rm --user root \
-                        --add-host=host.docker.internal:host-gateway \
+                        --network host \
                         -v $(pwd):/zap/wrk/:rw \
                         ghcr.io/zaproxy/zaproxy:stable \
                         zap-baseline.py \
-                        -t http://host.docker.internal:5000 \
+                        -t http://127.0.0.1:5000 \
                         -r zap-report.html
                 '''
             }
