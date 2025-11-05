@@ -7,7 +7,7 @@ pipeline {
         // URL del SonarQube (ajusta según tu instalación)
         SONARQUBE_URL = "http://localhost:9000"
         // Token de SonarQube (puedes guardarlo como credencial Jenkins si prefieres)
-        SONARQUBE_TOKEN = "sqa_ee95b0074ba94ff9dda84a4a9df3bdb609f28ac0"
+        SONARQUBE_TOKEN = "sqa_3ad0adb13c4c79046b2c67a27b63995025307220"
         // URL de la app Flask que analizará ZAP
         TARGET_URL = "http://localhost:5000"
     }
