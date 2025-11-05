@@ -36,16 +36,14 @@ pipeline {
               docker run --rm \
                   -v "$PWD":/src \
                   -v dependency-check-data:/usr/share/dependency-check/data \
-                  owasp/dependency-check:11.1.0 \
+                  owasp/dependency-check:12.1.2 \
                   --project pipeline-sec \
                   --scan /src \
-                  --format HTML \
+                  --format XML \
                   --out /src/reports \
                   --noupdate \
-                  --enableExperimental \
-                  --disableArchive \
-                  --disableJar \
-                  --disableBundleAudit
+                  --enableExperimental
+
 
                 )
               '''
