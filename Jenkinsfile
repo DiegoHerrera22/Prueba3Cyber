@@ -27,7 +27,7 @@ pipeline {
                         docker run --rm \
                             -v "$PWD":/src \
                             -v dependency-check-data:/usr/share/dependency-check/data \
-                            owasp/dependency-check:10.0.2 \
+                            owasp/dependency-check:8.4.0 \
                             --project pipeline-sec \
                             --scan /src \
                             --format HTML \
@@ -73,7 +73,7 @@ pipeline {
                         ghcr.io/zaproxy/zaproxy:stable \
                         zap-baseline.py \
                         -t http://172.23.41.49:5000 \
-                        -r zap-report.html || true
+                        -r /zap/wrk/zap-report.html || true
                 '''
             }
             post {
@@ -97,10 +97,8 @@ pipeline {
     
             // Verificar si los reportes existen antes de archivarlos
             sh '''
-                echo "📁 Archivos en reports/:"
-                ls -la reports || true
-                echo "📁 Archivos en workspace:"
-                ls -la || true
+                echo "📁 Archivos generados:"
+                find $(pwd) -maxdepth 2 -type f -name "*.html" -o -name "*.json" || true
             '''
     
             // Archivar lo que exista
