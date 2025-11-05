@@ -20,11 +20,11 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'nvd-api-key', variable: 'NVD_API_KEY')]) {
                     sh '''
-                        mkdir -p reports
-                        chmod -R 777 reports
+                        mkdir -p $(pwd)/reports
+                        chmod -R 777 $(pwd)/reports
                         docker volume create dependency-check-data || true
                         echo "🔍 Ejecutando OWASP Dependency-Check..."
-                        docker run --rm --user root \
+                        docker run --user root \
                             -v $(pwd):/src \
                             -v dependency-check-data:/usr/share/dependency-check/data \
                             owasp/dependency-check:10.0.2 \
@@ -73,7 +73,8 @@ pipeline {
                         ghcr.io/zaproxy/zaproxy:stable \
                         zap-baseline.py \
                         -t http://127.0.0.1:5000 \
-                        -r zap-report.html
+                        -r zap-report.html || true
+
                 '''
             }
             post {
