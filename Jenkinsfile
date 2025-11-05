@@ -68,7 +68,7 @@ pipeline {
                 sh '''
                     chmod -R 777 $(pwd)
                     docker run --rm --user root \
-                        --network host \
+                        --network jenkins-net \
                         -v $(pwd):/zap/wrk/:rw \
                         ghcr.io/zaproxy/zaproxy:stable \
                         zap-baseline.py \
