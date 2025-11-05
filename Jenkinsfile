@@ -2,8 +2,9 @@ pipeline {
     agent any
 
     tools {
-        sonarQube 'SonarQubeScanner'
+        tool name: 'SonarQubeScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
     }
+
     
     environment {
         // Nombre del proyecto para SonarQube y Dependency-Check
