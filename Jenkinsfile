@@ -30,16 +30,15 @@ pipeline {
                             owasp/dependency-check:8.4.0 \
                             --project pipeline-sec \
                             --scan /src \
-                            --format HTML \
+                            --format "ALL" \
                             --out /src/reports \
-                            --noupdate \
                             --enableExperimental || true
                     '''
                 }
             }
             post {
-                success {
-                    echo "✅ Reporte generado en reports/dependency-check-report.html"
+                always {
+                    echo "✅ Dependency-Check finalizado (ver reports/)"
                 }
             }
         }
@@ -73,12 +72,14 @@ pipeline {
                         ghcr.io/zaproxy/zaproxy:stable \
                         zap-baseline.py \
                         -t http://172.23.41.49:5000 \
-                        -r /zap/wrk/zap-report.html || true
+                        -r zap-report.html \
+                        -w /zap/wrk/zap-warnings.html \
+                        -J /zap/wrk/zap-report.json || true
                 '''
             }
             post {
-                success {
-                    echo "✅ Reporte de ZAP generado: zap-report.html"
+                always {
+                    echo "✅ Reporte de ZAP generado (html/json)"
                 }
             }
         }
@@ -94,16 +95,12 @@ pipeline {
     post {
         always {
             echo "🧾 Guardando reportes de análisis..."
-    
-            // Verificar si los reportes existen antes de archivarlos
             sh '''
                 echo "📁 Archivos generados:"
                 find $(pwd) -maxdepth 2 -type f -name "*.html" -o -name "*.json" || true
             '''
-    
-            // Archivar lo que exista
-            archiveArtifacts artifacts: '**/dependency-check-report.*', fingerprint: true, allowEmptyArchive: true
-            archiveArtifacts artifacts: 'zap-report.html', fingerprint: true, allowEmptyArchive: true
+            archiveArtifacts artifacts: 'reports/**/*.html, reports/**/*.json', fingerprint: true, allowEmptyArchive: true
+            archiveArtifacts artifacts: 'zap-report.html, zap-warnings.html, zap-report.json', fingerprint: true, allowEmptyArchive: true
         }
     }
 }
